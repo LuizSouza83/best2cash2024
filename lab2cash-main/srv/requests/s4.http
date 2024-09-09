@@ -1,0 +1,43 @@
+@server = http://localhost:4004
+@auth = Authorization: Basic alice:
+
+### Main.A_BusinessPartner
+GET {{server}}/main/A_BusinessPartner?$top=1
+Content-Type: application/json
+{{auth}}
+
+
+### Main.A_Product
+GET {{server}}/main/A_Product?$expand=to_Description&$top=1
+Content-Type: application/json
+{{auth}}
+
+
+### Main.A_SalesOrder
+GET {{server}}/main/A_SalesOrder?$expand=to_Item&$top=1
+Content-Type: application/json
+{{auth}}
+
+
+### Main.A_SalesOrder
+POST {{server}}/main/A_SalesOrder
+Content-Type: application/json
+{{auth}}
+
+{
+  "SalesOrderType": "OR",
+  "PurchaseOrderByCustomer": "1000010",
+  "SoldToParty": "USCU_S02",
+  "TotalNetAmount": "2000.00",
+  "to_Item": [
+    {
+      "SalesOrderItem": "1",
+      "Material": "EWMS7-01",
+      "RequestedQuantity": "200",
+      "RequestedQuantityUnit": "PC"
+    }
+  ],
+  "Order": {
+    "applied_cashback": 0
+  }
+}
